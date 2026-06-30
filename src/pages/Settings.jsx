@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
 export default function Settings() {
+  const { username, setUsername } = useContext(UserContext); // ⭐ 핵심!
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setUsername(value); // Context 값 변경
+    localStorage.setItem("username", value); // 새로고침 대비 저장
+  };
+
   return (
     <div>
       <header className="mb-8">
@@ -11,12 +20,11 @@ export default function Settings() {
         <p className="text-gray-700 font-medium mb-2">사용자 프로필 변경</p>
         <input
           type="text"
+          value={username}
+          onChange={handleChange}
           placeholder="이름을 입력하세요"
           className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-indigo-500"
         />
-        <p className="text-xs text-gray-400 mt-4">
-          내일 배울 Context API를 통해 전역으로 연결할 예정입니다.
-        </p>
       </div>
     </div>
   );

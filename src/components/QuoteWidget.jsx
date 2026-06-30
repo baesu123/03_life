@@ -20,7 +20,19 @@ export default function QuoteWidget() {
       </p>
       <p className="text-gray-400 text-xs text-right mt-2">— {data?.author}</p>
       <p>
-        <button onClick={refetch}>[새 명언]</button>
+        <button
+          onClick={refetch}
+          style={{
+            backgroundColor: "#4F46E5",
+            color: "white",
+            padding: "5px 8px",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          [새 명언]
+        </button>
       </p>
     </div>
   );
