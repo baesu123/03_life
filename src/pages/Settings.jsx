@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
 export default function Settings() {
-  const { username, setUsername } = useContext(UserContext); // ⭐ 핵심!
+  const { username, setUsername } = useContext(UserContext); //
 
   const handleChange = (e) => {
     const value = e.target.value;
