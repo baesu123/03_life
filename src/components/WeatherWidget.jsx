@@ -30,7 +30,7 @@ export default function WeatherWidget() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-4xl font-bold text-gray-800">
+          <div className="text-4xl font-bold text-gray-800 text-gray-800 dark:text-white">
             {current.temp_C}°C
           </div>
           <p className="text-gray-500 text-sm mt-1 capitalize">

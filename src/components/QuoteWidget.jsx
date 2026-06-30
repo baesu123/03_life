@@ -15,7 +15,10 @@ export default function QuoteWidget() {
 
   return (
     <div className="flex flex-col justify-between min-h-[90px]">
-      <p className="text-gray-700 italic font-medium leading-relaxed">
+      <p
+        className="text-gray-700 italic font-medium leading-relaxed
+      text-gray-800 dark:text-white"
+      >
         "{data?.message}"
       </p>
       <p className="text-gray-400 text-xs text-right mt-2">— {data?.author}</p>

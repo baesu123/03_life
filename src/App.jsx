@@ -8,7 +8,10 @@ import { UserProvider } from "./context/UserContext";
 export default function App() {
   return (
     <UserProvider>
-      <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
+      <div
+        className="flex flex-col md:flex-row min-h-screen
+                bg-gray-50 dark:bg-gray-900"
+      >
         {/* 사이드바는 항상 고정 */}
         <Sidebar />
 
