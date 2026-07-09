@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 /**
  * TodoWidget - 할 일 목록 위젯 (업그레이드 버전)
@@ -13,6 +13,9 @@ export default function TodoWidget() {
     { id: 2, text: "Tailwind CSS 익히기", completed: false },
   ]);
   const [inputValue, setInputValue] = useState(""); // 입력창 글자 저장용
+
+  const dragItem = useRef(null);
+  const dragOverItem = useRef(null);
 
   // 2. 이벤트 핸들러: 등록 버튼 클릭 시
   const handleAddTodo = (e) => {
@@ -48,6 +51,28 @@ export default function TodoWidget() {
   const completedCount = todos.filter((t) => t.completed).length;
   const total = todos.length;
 
+  const handleDragStart = (e, index) => {
+    dragItem.current = index;
+  };
+
+  const handleDragEnter = (e, index) => {
+    dragOverItem.current = index;
+  };
+
+  const handleDragEnd = () => {
+    const copyListItems = [...todos];
+    const dragItemContent = copyListItems[dragItem.current];
+
+    // 드래그한 아이템을 제거하고 새로운 위치에 삽입
+    copyListItems.splice(dragItem.current, 1);
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+
+    dragItem.current = null;
+    dragOverItem.current = null;
+
+    setTodos(copyListItems);
+  };
+
   return (
     <div>
       {/* 진행률 표시바 (todo가 1개 이상일 때만 표시) */}
@@ -64,7 +89,9 @@ export default function TodoWidget() {
             {/* 완료 비율만큼 채워지는 바 */}
             <div
               className="bg-indigo-500 h-1.5 rounded-full transition-all duration-500"
-              style={{ width: `${total > 0 ? (completedCount / total) * 100 : 0}%` }}
+              style={{
+                width: `${total > 0 ? (completedCount / total) * 100 : 0}%`,
+              }}
             />
           </div>
         </div>
@@ -97,9 +124,14 @@ export default function TodoWidget() {
         </p>
       ) : (
         <ul className="space-y-2 max-h-[160px] overflow-y-auto pr-1">
-          {todos.map((todo) => (
+          {todos.map((todo, index) => (
             <li
               key={todo.id}
+              draggable
+              onDragStart={(e) => handleDragStart(e, index)}
+              onDragEnter={(e) => handleDragEnter(e, index)}
+              onDragOver={(e) => e.preventDefault()}
+              onDragEnd={handleDragEnd}
               className="flex justify-between items-center bg-gray-50 dark:bg-gray-700/50
                          px-3 py-2 rounded-lg text-sm border border-gray-100 dark:border-gray-600 group"
             >
